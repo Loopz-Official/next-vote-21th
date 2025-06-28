@@ -55,11 +55,7 @@ export default function VoteResultTab({ type }: VoteResultTabProps) {
       const response = await apiCaller();
       setResults(response.data);
     } catch (error) {
-      // 방법 1: 타입 단언 사용
-      const errorMessage =
-        (error as any)?.data?.messageDetail || "투표 중 문제가 발생했습니다.";
-
-      alert(errorMessage);
+      alert("결과를 불러오는 중 문제가 발생했습니다.");
     }
   };
 
@@ -72,7 +68,9 @@ export default function VoteResultTab({ type }: VoteResultTabProps) {
       try {
         const response = await apiCaller();
         setCandidates(response.data);
-      } catch (error) {}
+      } catch (error) {
+        alert("후보를 불러오는 중 문제가 발생했습니다.");
+      }
     };
 
     getCandidates();

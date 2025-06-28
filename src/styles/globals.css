@@ -1,0 +1,77 @@
+@import 'tailwindcss';
+
+@theme {
+  /* monochrome */
+  --color-monochrome-white: #ffffff;
+  --color-monochrome-100: #d5d5d5;
+  --color-monochrome-200: #cacaca;
+  --color-monochrome-300: #bfbfbf;
+  --color-monochrome-400: #acacac;
+  --color-monochrome-500: #797979;
+  --color-monochrome-black: #000000;
+
+  /* primary */
+  --color-primary-200: #bdc1f6;
+  --color-primary-300: #9ba3ff;
+  --color-primary-400: #5863ec;
+  --color-primary-500: #3e4cf7;
+  --color-primary-600: #384084;
+  --color-primary-700: #2333ff;
+
+  /* 타이틀 줄 간격 overwrite */
+  --text-5xl--line-height: 1.2;
+}
+
+body {
+  color: var(--color-monochrome-black);
+  font-family: var(--font-pretendard), sans-serif;
+
+  width: 100vw;
+  min-height: 100vh;
+}
+
+button,
+a {
+  cursor: pointer;
+}
+
+@layer base {
+  button {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    pointer-events: none;
+  }
+}
+
+@layer utility {
+  .en-text {
+    font-family: var(--font-loos-normal), sans-serif;
+  }
+
+  .intro-panel-bg {
+    background: linear-gradient(315deg, #779bff -3.03%, #ffe4e4 60.18%);
+  }
+
+  .input-dropdown-common {
+    @apply w-full h-fit py-4 px-4 border-2 border-monochrome-200 rounded-lg text-xl font-normal;
+  }
+
+  .gnb-box-shadow {
+    box-shadow: 1px 1px 2px 0px rgba(255, 255, 255, 0.3) inset,
+      -1px -1px 2px 0px rgba(237, 237, 237, 0.5) inset,
+      -4px 4px 8px 0px rgba(237, 237, 237, 0.2),
+      4px -4px 8px 0px rgba(237, 237, 237, 0.2),
+      -4px -4px 8px 0px rgba(255, 255, 255, 0.9),
+      4px 4px 10px 0px rgba(237, 237, 237, 0.9);
+  }
+
+  .gnb-option {
+    @apply text-2xl;
+  }
+
+  .gnb-option-active {
+    @apply text-primary-700 font-medium;
+  }
+}

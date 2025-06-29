@@ -1,4 +1,4 @@
-import { authRequest } from '@/services/utils/instance';
+import { authRequest, request } from '@/services/utils/instance';
 import { ApiResponse } from '@/services/utils/types';
 import { SignupInfo } from '@/stores/useSignupInfo';
 import { SignupResponse } from './types';
@@ -42,5 +42,18 @@ export const login = async (email: string, password: string) => {
 		}
 	} catch (error) {
 		console.error('Login error:', error);
+	}
+};
+
+export const logout = async () => {
+	try {
+		const response = await request.post('/user/v1/logout');
+		console.log('Logout response:', response);
+
+		if (response.status === 200) {
+			return response.status;
+		}
+	} catch (error) {
+		console.error('Logout error:', error);
 	}
 };

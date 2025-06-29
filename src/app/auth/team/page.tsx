@@ -44,7 +44,7 @@ export default function TeamPage() {
 
 		if (!hasError) {
 			const status = await signup(signupInfo);
-			if (status === 200 || status === 201) {
+			if (status === 201) {
 				router.push('/vote/leader');
 			} else {
 				alert('회원가입에 실패했습니다.');

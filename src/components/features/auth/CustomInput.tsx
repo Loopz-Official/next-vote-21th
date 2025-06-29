@@ -40,7 +40,7 @@ const CustomInput = ({
 					)}
 					placeholder={placeholder}
 					ref={ref}
-					autoComplete={type === 'password' ? 'current-password' : 'off'}
+					autoComplete={type === 'password' ? `current-password` : 'on'}
 				/>
 				{isVerifyContained && <VerifyButton />}
 			</div>

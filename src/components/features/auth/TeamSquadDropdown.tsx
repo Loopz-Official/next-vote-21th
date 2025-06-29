@@ -1,47 +1,64 @@
-import { useState } from 'react';
+import clsx from 'clsx';
+import { useState, useRef } from 'react';
 
 import { DropdownArrow } from '@/icons/icon';
 import DropdownMenu from './DropdownMenu';
-import clsx from 'clsx';
+import useOutsideClick from '@/hooks/useOutsideClick';
 
 type TeamSquadDropdownProps = {
-  type: 'Team' | 'Squad';
+	type: 'Team' | 'Squad';
+	value: string;
+	onChange: (value: string) => void;
+	error?: boolean;
+	errorMessage?: string;
 };
 
-const TeamSquadDropdown = ({ type }: TeamSquadDropdownProps) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-  const [selectedMenu, setSelectedMenu] = useState<string>('');
+const TeamSquadDropdown = ({
+	type,
+	value,
+	onChange,
+	error = false,
+	errorMessage = '',
+}: TeamSquadDropdownProps) => {
+	const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+	const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const placeholder = selectedMenu
-    ? selectedMenu
-    : type === 'Team'
-    ? 'Select Team'
-    : 'Select Squad (e.g. Frontend)';
+	useOutsideClick(dropdownRef, () => setIsDropdownOpen(false));
 
-  const handleMenuClick = (menu: string) => {
-    setSelectedMenu(menu);
-    setIsDropdownOpen(false);
-  };
+	const placeholder = value
+		? value
+		: type === 'Team'
+		? 'Select Team'
+		: 'Select Squad (e.g. Frontend)';
 
-  return (
-    <div className="w-full h-fit relative">
-      <button
-        type="button"
-        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-        className={clsx(
-          'input-dropdown-common flex justify-between items-center text-monochrome-300',
-          selectedMenu && 'text-monochrome-black'
-        )}
-      >
-        {placeholder}
-        <DropdownArrow />
-      </button>
+	const handleMenuClick = (menu: string) => {
+		onChange(menu.toUpperCase());
+		setIsDropdownOpen(false);
+	};
 
-      {isDropdownOpen && (
-        <DropdownMenu type={type} handleMenuClick={handleMenuClick} />
-      )}
-    </div>
-  );
+	return (
+		<div ref={dropdownRef} className="w-full h-fit relative">
+			<button
+				type="button"
+				onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+				className={clsx(
+					'input-dropdown-common flex justify-between items-center text-monochrome-300',
+					value && 'text-monochrome-black',
+					error && 'border-red-500 focus:outline-red-500'
+				)}
+			>
+				{placeholder}
+				<DropdownArrow />
+			</button>
+
+			{isDropdownOpen && (
+				<DropdownMenu type={type} handleMenuClick={handleMenuClick} />
+			)}
+			{error && (
+				<p className="mt-1 pl-1.5 text-sm text-red-500">{errorMessage}</p>
+			)}
+		</div>
+	);
 };
 
 export default TeamSquadDropdown;

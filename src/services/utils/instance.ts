@@ -31,7 +31,7 @@ export const authRequest = axios.create({
 });
 
 // 새로운 서버 axios 인스턴스
-export const request = axios.create({
+export const request: CustomInstance = axios.create({
 	baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
 	timeout: 20000,
 	headers: {

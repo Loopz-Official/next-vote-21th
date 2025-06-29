@@ -30,6 +30,22 @@ export const authRequest = axios.create({
 	},
 });
 
+authRequest.interceptors.request.use(
+	(config) => {
+		const accessToken = localStorage.getItem('access-token');
+
+		// 토큰이 존재하면 토큰을 Authorization 헤더에 추가
+		if (accessToken) {
+			config.headers.Authorization = `Bearer ${accessToken}`;
+		}
+
+		return config;
+	},
+	(error) => {
+		return Promise.reject(error);
+	}
+);
+
 // 새로운 서버 axios 인스턴스
 export const request: CustomInstance = axios.create({
 	baseURL: process.env.NEXT_PUBLIC_SERVER_URL,

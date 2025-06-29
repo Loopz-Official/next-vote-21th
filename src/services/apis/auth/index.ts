@@ -47,7 +47,7 @@ export const login = async (email: string, password: string) => {
 
 export const logout = async () => {
 	try {
-		const response = await request.post('/user/v1/logout');
+		const response = await authRequest.post('/user/v1/logout');
 		console.log('Logout response:', response);
 
 		if (response.status === 200) {
